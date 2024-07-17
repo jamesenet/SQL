@@ -1,0 +1,123 @@
+
+Question 1
+All of the questions in this quiz pull from the open source Chinook Database. Please refer to the ER Diagram below and familiarize yourself with the table and column names to write accurate queries and get the appropriate answers.
+
+
+
+
+How many albums does the artist Led Zeppelin have? 
+
+
+select
+Ar.Name,Count(A.Title)
+from Artists Ar
+Left join Albums A ON Ar.ArtistId = A.ArtistId
+Where Ar.Name = 'Led Zeppelin'
+
++--------------+----------------+
+| Name         | Count(A.Title) |
++--------------+----------------+
+| Led Zeppelin |             14 |
++--------------+----------------+
+
+
+
+
+Question 2
+All of the questions in this quiz pull from the open source Chinook Database. Please refer to the  ER Diagram below and familiarize yourself with the table and column names to write accurate queries and get the appropriate answers. 
+
+
+
+Create a list of album titles and the unit prices for the artist "Audioslave".
+
+
+select
+A.Title,Ar.Name,T.UnitPrice
+from Albums A
+LEFT JOIN Tracks T ON A.AlbumId = T.AlbumId
+LEFT JOIN Artists Ar ON A.ArtistId = Ar.ArtistId
+Where Ar.Name = 'Audioslave'
+Order by A.Title;
+
++--------------+------------+-----------+
+| Title        | Name       | UnitPrice |
++--------------+------------+-----------+
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Audioslave   | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
+| Out Of Exile | Audioslave |      0.99 |
++--------------+------------+-----------+
+(Output limit exceeded, 25 of 40 total rows shown)
+How many records are returned?
+
+
+
+
+Question 3
+All of the questions in this quiz pull from the open source Chinook Database. Please refer to the ER Diagram below and familiarize yourself with the table and column names to write accurate queries and get the appropriate answers. 
+
+
+
+Find the first and last name of any customer who does not have an invoice. Are there any customers returned from the query?  
+
+select
+C.FirstName,C.LastName,I.InvoiceId
+from Customers C
+Left join Invoices I On C.CustomerId = I.CustomerId
+Where InvoiceId = NULL
+Order by C.LastName
+
++-----------+----------+-----------+
+| FirstName | LastName | InvoiceId |
++-----------+----------+-----------+
++-----------+----------+-----------+
+(Zero rows)
+
+
+
+
+
+Question 4
+All of the questions in this quiz pull from the open source Chinook Database. Please refer to the ER Diagram below and familiarize yourself with the table and column names to write accurate queries and get the appropriate answers. 
+
+
+
+
+Find the total price for each album.
+
+select
+A.AlbumId, A.Title, SUM(T.UnitPrice) AS TotalPrice
+FROM Albums A
+LEFT JOIN Tracks T
+ON A.AlbumId = T.AlbumId
+WHERE A.Title ='Big Ones'
+
++---------+----------+--------------------+
+| AlbumId | Title    |         TotalPrice |
++---------+----------+--------------------+
+|       5 | Big Ones | 14.850000000000001 |
++---------+----------+--------------------+
+What is the total price for the album “Big Ones”?
+
+
