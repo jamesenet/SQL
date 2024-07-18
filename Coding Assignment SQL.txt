@@ -1,0 +1,265 @@
+
+Question 1
+Using a subquery, find the names of all the tracks for the album "Californication".
+
+
+select
+T.Name,A.Title
+From Tracks T
+Left join Albums A ON T.AlbumId = A.AlbumId
+where A.Title = 'Californication';
+
++-------------------+-----------------+
+| Name              | Title           |
++-------------------+-----------------+
+| Around The World  | Californication |
+| Parallel Universe | Californication |
+| Scar Tissue       | Californication |
+| Otherside         | Californication |
+| Get On Top        | Californication |
+| Californication   | Californication |
+| Easily            | Californication |
+| Porcelain         | Californication |
+| Emit Remmus       | Californication |
+| I Like Dirt       | Californication |
+| This Velvet Glove | Californication |
+| Savior            | Californication |
+| Purple Stain      | Californication |
+| Right On Time     | Californication |
+| Road Trippin'     | Californication |
++-------------------+-----------------+
+What is the title of the 8th track?
+
+
+
+
+Question 2
+All of the questions in this quiz refer to the open source Chinook Database. Please familiarize yourself with the 
+ER diagram
+ in order to familiarize yourself with the table and column names in order to write accurate queries and get the appropriate answers.
+
+Find the total number of invoices for each customer along with the customer's full name, city and email.
+
+
+select
+C.FirstName,C.LastName,C.City,C.Email,count(I.InvoiceId) as TotalNum
+from Customers C
+Left Join Invoices I ON C.CustomerId = I.CustomerId
+group by C.CustomerId;
+
++-----------+-------------+---------------------+-------------------------------+----------+
+| FirstName | LastName    | City                | Email                         | TotalNum |
++-----------+-------------+---------------------+-------------------------------+----------+
+| Luís      | Gonçalves   | São José dos Campos | luisg@embraer.com.br          |        7 |
+| Leonie    | Köhler      | Stuttgart           | leonekohler@surfeu.de         |        7 |
+| François  | Tremblay    | Montréal            | ftremblay@gmail.com           |        7 |
+| Bjørn     | Hansen      | Oslo                | bjorn.hansen@yahoo.no         |        7 |
+| František | Wichterlová | Prague              | frantisekw@jetbrains.com      |        7 |
+| Helena    | Holý        | Prague              | hholy@gmail.com               |        7 |
+| Astrid    | Gruber      | Vienne              | astrid.gruber@apple.at        |        7 |
+| Daan      | Peeters     | Brussels            | daan_peeters@apple.be         |        7 |
+| Kara      | Nielsen     | Copenhagen          | kara.nielsen@jubii.dk         |        7 |
+| Eduardo   | Martins     | São Paulo           | eduardo@woodstock.com.br      |        7 |
+| Alexandre | Rocha       | São Paulo           | alero@uol.com.br              |        7 |
+| Roberto   | Almeida     | Rio de Janeiro      | roberto.almeida@riotur.gov.br |        7 |
+| Fernanda  | Ramos       | Brasília            | fernadaramos4@uol.com.br      |        7 |
+| Mark      | Philips     | Edmonton            | mphilips12@shaw.ca            |        7 |
+| Jennifer  | Peterson    | Vancouver           | jenniferp@rogers.ca           |        7 |
+| Frank     | Harris      | Mountain View       | fharris@google.com            |        7 |
+| Jack      | Smith       | Redmond             | jacksmith@microsoft.com       |        7 |
+| Michelle  | Brooks      | New York            | michelleb@aol.com             |        7 |
+| Tim       | Goyer       | Cupertino           | tgoyer@apple.com              |        7 |
+| Dan       | Miller      | Mountain View       | dmiller@comcast.com           |        7 |
+| Kathy     | Chase       | Reno                | kachase@hotmail.com           |        7 |
+| Heather   | Leacock     | Orlando             | hleacock@gmail.com            |        7 |
+| John      | Gordon      | Boston              | johngordon22@yahoo.com        |        7 |
+| Frank     | Ralston     | Chicago             | fralston@gmail.com            |        7 |
+| Victor    | Stevens     | Madison             | vstevens@yahoo.com            |        7 |
++-----------+-------------+---------------------+-------------------------------+----------+
+(Output limit exceeded, 25 of 59 total rows shown)
+After running the query described above, what is the correct customer information for the 5th person, František Wichterlová? Select the answer below.
+
+
+
+
+
+Question 3
+Retrieve the track name, album, artistID, and trackID for all the albums.
+
+
+select
+T.TrackId,T.Name,A.Title,Ar.ArtistId
+From Albums A 
+Left Join Tracks T ON A.AlbumId = T.AlbumId
+Left Join Artists Ar ON A.ArtistId = Ar.ArtistId;
+
++---------+-----------------------------------------+---------------------------------------+----------+
+| TrackId | Name                                    | Title                                 | ArtistId |
++---------+-----------------------------------------+---------------------------------------+----------+
+|       1 | For Those About To Rock (We Salute You) | For Those About To Rock We Salute You |        1 |
+|       6 | Put The Finger On You                   | For Those About To Rock We Salute You |        1 |
+|       7 | Let's Get It Up                         | For Those About To Rock We Salute You |        1 |
+|       8 | Inject The Venom                        | For Those About To Rock We Salute You |        1 |
+|       9 | Snowballed                              | For Those About To Rock We Salute You |        1 |
+|      10 | Evil Walks                              | For Those About To Rock We Salute You |        1 |
+|      11 | C.O.D.                                  | For Those About To Rock We Salute You |        1 |
+|      12 | Breaking The Rules                      | For Those About To Rock We Salute You |        1 |
+|      13 | Night Of The Long Knives                | For Those About To Rock We Salute You |        1 |
+|      14 | Spellbound                              | For Those About To Rock We Salute You |        1 |
+|       2 | Balls to the Wall                       | Balls to the Wall                     |        2 |
+|       3 | Fast As a Shark                         | Restless and Wild                     |        2 |
+|       4 | Restless and Wild                       | Restless and Wild                     |        2 |
+|       5 | Princess of the Dawn                    | Restless and Wild                     |        2 |
+|      15 | Go Down                                 | Let There Be Rock                     |        1 |
+|      16 | Dog Eat Dog                             | Let There Be Rock                     |        1 |
+|      17 | Let There Be Rock                       | Let There Be Rock                     |        1 |
+|      18 | Bad Boy Boogie                          | Let There Be Rock                     |        1 |
+|      19 | Problem Child                           | Let There Be Rock                     |        1 |
+|      20 | Overdose                                | Let There Be Rock                     |        1 |
+|      21 | Hell Ain't A Bad Place To Be            | Let There Be Rock                     |        1 |
+|      22 | Whole Lotta Rosie                       | Let There Be Rock                     |        1 |
+|      23 | Walk On Water                           | Big Ones                              |        3 |
+|      24 | Love In An Elevator                     | Big Ones                              |        3 |
+|      25 | Rag Doll                                | Big Ones                              |        3 |
++---------+-----------------------------------------+---------------------------------------+----------+
+(Output limit exceeded, 25 of 3503 total rows shown)
+What is the song title of trackID 12 from the "For Those About to Rock We Salute You" album? Enter the answer below.
+
+
+
+Question 4
+Retrieve a list with the managers last name, and the last name of the employees who report to him or her.
+
+
+select 
+mgr.LastName Manager, e.LastName Employee
+from Employees e
+left join Employees mgr on e.ReportsTo = mgr.EmployeeId;
+
+
++----------+----------+
+|  Manager | Employee |
++----------+----------+
+|     None | Adams    |
+|    Adams | Edwards  |
+|  Edwards | Peacock  |
+|  Edwards | Park     |
+|  Edwards | Johnson  |
+|    Adams | Mitchell |
+| Mitchell | King     |
+| Mitchell | Callahan |
++----------+----------+
+After running the query described above, who are the reports for the manager named Mitchell (select all that apply)?
+
+
+
+
+
+Question 5
+Find the name and ID of the artists who do not have albums. 
+
+
+select
+A.Title,Ar.Name,Ar.ArtistId
+from Artists Ar
+Left Join Albums A ON Ar.ArtistId = A.ArtistId
+Where A.Title IS NULL;
+
++-------+------------------------------------------------------+----------+
+| Title | Name                                                 | ArtistId |
++-------+------------------------------------------------------+----------+
+|  None | Milton Nascimento & Bebeto                           |       25 |
+|  None | Azymuth                                              |       26 |
+|  None | João Gilberto                                        |       28 |
+|  None | Bebel Gilberto                                       |       29 |
+|  None | Jorge Vercilo                                        |       30 |
+|  None | Baby Consuelo                                        |       31 |
+|  None | Ney Matogrosso                                       |       32 |
+|  None | Luiz Melodia                                         |       33 |
+|  None | Nando Reis                                           |       34 |
+|  None | Pedro Luís & A Parede                                |       35 |
+|  None | Banda Black Rio                                      |       38 |
+|  None | Fernanda Porto                                       |       39 |
+|  None | Os Cariocas                                          |       40 |
+|  None | A Cor Do Som                                         |       43 |
+|  None | Kid Abelha                                           |       44 |
+|  None | Sandra De Sá                                         |       45 |
+|  None | Hermeto Pascoal                                      |       47 |
+|  None | Barão Vermelho                                       |       48 |
+|  None | Edson, DJ Marky & DJ Patife Featuring Fernanda Porto |       49 |
+|  None | Santana Feat. Dave Matthews                          |       60 |
+|  None | Santana Feat. Everlast                               |       61 |
+|  None | Santana Feat. Rob Thomas                             |       62 |
+|  None | Santana Feat. Lauryn Hill & Cee-Lo                   |       63 |
+|  None | Santana Feat. The Project G&B                        |       64 |
+|  None | Santana Feat. Maná                                   |       65 |
++-------+------------------------------------------------------+----------+
+(Output limit exceeded, 25 of 71 total rows shown)
+After running the query described above, two of the records returned have the same last name. Enter that name below.
+
+
+
+Question 6
+Use a UNION to create a list of all the employee's and customer's first names and last names ordered by the last name in descending order.
+
+
+select
+E.FirstName,E.LastName
+from employees E
+UNION
+select 
+C.FirstName,C.LastName
+from customers C
+Order by C.LastName DESC;
+
++-------------+--------------+
+| E.FirstName | E.LastName   |
++-------------+--------------+
+| Fynn        | Zimmermann   |
+| Stanisław   | Wójcik       |
+| František   | Wichterlová  |
+| Johannes    | Van der Berg |
+| François    | Tremblay     |
+| Mark        | Taylor       |
+| Ellie       | Sullivan     |
+| Victor      | Stevens      |
+| Puja        | Srivastava   |
+| Jack        | Smith        |
+| Martha      | Silk         |
+| Niklas      | Schröder     |
+| Hannah      | Schneider    |
+| Madalena    | Sampaio      |
+| Luis        | Rojas        |
+| Alexandre   | Rocha        |
+| Fernanda    | Ramos        |
+| Frank       | Ralston      |
+| Mark        | Philips      |
+| Jennifer    | Peterson     |
+| Daan        | Peeters      |
+| Jane        | Peacock      |
+| Margaret    | Park         |
+| Manoj       | Pareek       |
+| Hugh        | O'Reilly     |
++-------------+--------------+
+(Output limit exceeded, 25 of 67 total rows shown)
+After running the query described above, determine what is the last name of the 6th record? Enter it below. Remember to order things in descending order to be sure to get the correct answer.
+
+
+
+Question 7
+See if there are any customers who have a different city listed in their billing city versus their customer city.
+
+
+select 
+C.FirstName,C.City,I.BillingCity
+from Customers C
+left join Invoices I ON C.CustomerId=I.CustomerId
+where C.City<>I.BillingCity;
+
++-----------+------+-------------+
+| FirstName | City | BillingCity |
++-----------+------+-------------+
++-----------+------+-------------+
+(Zero rows)
+Indicate your answer below.
+
