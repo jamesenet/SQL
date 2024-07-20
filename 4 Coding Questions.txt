@@ -1,0 +1,193 @@
+
+Question 1
+Pull a list of customer ids with the customer’s full name, and address, along with combining their city and country together. Be sure to make a space in between these two and make it UPPER CASE. (e.g. LOS ANGELES USA)
+
+
+select
+C.CustomerId,C.FirstName,C.LastName,C.Address,UPPER(C.City|| ' ' ||C.Country) AS City_Country
+from Customers C;
+
++------------+-----------+-------------+--------------------------------------+----------------------------+
+| CustomerId | FirstName | LastName    | Address                              | City_Country               |
++------------+-----------+-------------+--------------------------------------+----------------------------+
+|          1 | Luís      | Gonçalves   | Av. Brigadeiro Faria Lima, 2170      | SãO JOSé DOS CAMPOS BRAZIL |
+|          2 | Leonie    | Köhler      | Theodor-Heuss-Straße 34              | STUTTGART GERMANY          |
+|          3 | François  | Tremblay    | 1498 rue Bélanger                    | MONTRéAL CANADA            |
+|          4 | Bjørn     | Hansen      | Ullevålsveien 14                     | OSLO NORWAY                |
+|          5 | František | Wichterlová | Klanova 9/506                        | PRAGUE CZECH REPUBLIC      |
+|          6 | Helena    | Holý        | Rilská 3174/6                        | PRAGUE CZECH REPUBLIC      |
+|          7 | Astrid    | Gruber      | Rotenturmstraße 4, 1010 Innere Stadt | VIENNE AUSTRIA             |
+|          8 | Daan      | Peeters     | Grétrystraat 63                      | BRUSSELS BELGIUM           |
+|          9 | Kara      | Nielsen     | Sønder Boulevard 51                  | COPENHAGEN DENMARK         |
+|         10 | Eduardo   | Martins     | Rua Dr. Falcão Filho, 155            | SãO PAULO BRAZIL           |
+|         11 | Alexandre | Rocha       | Av. Paulista, 2022                   | SãO PAULO BRAZIL           |
+|         12 | Roberto   | Almeida     | Praça Pio X, 119                     | RIO DE JANEIRO BRAZIL      |
+|         13 | Fernanda  | Ramos       | Qe 7 Bloco G                         | BRASíLIA BRAZIL            |
+|         14 | Mark      | Philips     | 8210 111 ST NW                       | EDMONTON CANADA            |
+|         15 | Jennifer  | Peterson    | 700 W Pender Street                  | VANCOUVER CANADA           |
+|         16 | Frank     | Harris      | 1600 Amphitheatre Parkway            | MOUNTAIN VIEW USA          |
+|         17 | Jack      | Smith       | 1 Microsoft Way                      | REDMOND USA                |
+|         18 | Michelle  | Brooks      | 627 Broadway                         | NEW YORK USA               |
+|         19 | Tim       | Goyer       | 1 Infinite Loop                      | CUPERTINO USA              |
+|         20 | Dan       | Miller      | 541 Del Medio Avenue                 | MOUNTAIN VIEW USA          |
+|         21 | Kathy     | Chase       | 801 W 4th Street                     | RENO USA                   |
+|         22 | Heather   | Leacock     | 120 S Orange Ave                     | ORLANDO USA                |
+|         23 | John      | Gordon      | 69 Salem Street                      | BOSTON USA                 |
+|         24 | Frank     | Ralston     | 162 E Superior Street                | CHICAGO USA                |
+|         25 | Victor    | Stevens     | 319 N. Frances Street                | MADISON USA                |
++------------+-----------+-------------+--------------------------------------+----------------------------+
+(Output limit exceeded, 25 of 59 total rows shown)
+What is the city and country result for CustomerID 16?
+
+
+
+
+Question 2
+Create a new employee user id by combining the first 4 letters of the employee’s first name with the first 2 letters of the employee’s last name. Make the new field lower case and pull each individual step to show your work.
+
+
+select
+FirstName,LastName,
+lower(substr(FirstName,1,4) || substr(LastName,1,2)) as NewId
+from Employees
+
++-----------+----------+--------+
+| FirstName | LastName | NewId  |
++-----------+----------+--------+
+| Andrew    | Adams    | andrad |
+| Nancy     | Edwards  | nanced |
+| Jane      | Peacock  | janepe |
+| Margaret  | Park     | margpa |
+| Steve     | Johnson  | stevjo |
+| Michael   | Mitchell | michmi |
+| Robert    | King     | robeki |
+| Laura     | Callahan | laurca |
++-----------+----------+--------+
+What is the final result for Robert King?
+
+
+
+
+
+Question 3
+Show a list of employees who have worked for the company for 15 or more years using the current date function. Sort by lastname ascending.
+
+
+select
+LastName,HireDate,strftime('%Y',HireDate) as year,
+2024-strftime('%Y',HireDate) as HireYear
+from Employees
+order by LastName asc
+
++----------+---------------------+------+----------+
+| LastName | HireDate            | year | HireYear |
++----------+---------------------+------+----------+
+| Adams    | 2002-08-14 00:00:00 | 2002 |       22 |
+| Callahan | 2004-03-04 00:00:00 | 2004 |       20 |
+| Edwards  | 2002-05-01 00:00:00 | 2002 |       22 |
+| Johnson  | 2003-10-17 00:00:00 | 2003 |       21 |
+| King     | 2004-01-02 00:00:00 | 2004 |       20 |
+| Mitchell | 2003-10-17 00:00:00 | 2003 |       21 |
+| Park     | 2003-05-03 00:00:00 | 2003 |       21 |
+| Peacock  | 2002-04-01 00:00:00 | 2002 |       22 |
++----------+---------------------+------+----------+
+What is the lastname of the last person on the list returned?
+
+
+
+
+
+Question 4
+Profiling the Customers table, answer the following question.
+
+
+select*
+from Customers
+where company is NULL;
+
++------------+-----------+------------+---------+------------------------------------------+----------------+-------+----------------+------------+--------------------+--------------------+--------------------------+--------------+
+| CustomerId | FirstName | LastName   | Company | Address                                  | City           | State | Country        | PostalCode | Phone              |                Fax | Email                    | SupportRepId |
++------------+-----------+------------+---------+------------------------------------------+----------------+-------+----------------+------------+--------------------+--------------------+--------------------------+--------------+
+|          2 | Leonie    | Köhler     |    None | Theodor-Heuss-Straße 34                  | Stuttgart      |  None | Germany        | 70174      | +49 0711 2842222   |               None | leonekohler@surfeu.de    |            5 |
+|          3 | François  | Tremblay   |    None | 1498 rue Bélanger                        | Montréal       |    QC | Canada         | H2G 1A7    | +1 (514) 721-4711  |               None | ftremblay@gmail.com      |            3 |
+|          4 | Bjørn     | Hansen     |    None | Ullevålsveien 14                         | Oslo           |  None | Norway         | 0171       | +47 22 44 22 22    |               None | bjorn.hansen@yahoo.no    |            4 |
+|          6 | Helena    | Holý       |    None | Rilská 3174/6                            | Prague         |  None | Czech Republic | 14300      | +420 2 4177 0449   |               None | hholy@gmail.com          |            5 |
+|          7 | Astrid    | Gruber     |    None | Rotenturmstraße 4, 1010 Innere Stadt     | Vienne         |  None | Austria        | 1010       | +43 01 5134505     |               None | astrid.gruber@apple.at   |            5 |
+|          8 | Daan      | Peeters    |    None | Grétrystraat 63                          | Brussels       |  None | Belgium        | 1000       | +32 02 219 03 03   |               None | daan_peeters@apple.be    |            4 |
+|          9 | Kara      | Nielsen    |    None | Sønder Boulevard 51                      | Copenhagen     |  None | Denmark        | 1720       | +453 3331 9991     |               None | kara.nielsen@jubii.dk    |            4 |
+|         13 | Fernanda  | Ramos      |    None | Qe 7 Bloco G                             | Brasília       |    DF | Brazil         | 71020-677  | +55 (61) 3363-5547 | +55 (61) 3363-7855 | fernadaramos4@uol.com.br |            4 |
+|         18 | Michelle  | Brooks     |    None | 627 Broadway                             | New York       |    NY | USA            | 10012-2612 | +1 (212) 221-3546  |  +1 (212) 221-4679 | michelleb@aol.com        |            3 |
+|         20 | Dan       | Miller     |    None | 541 Del Medio Avenue                     | Mountain View  |    CA | USA            | 94040-111  | +1 (650) 644-3358  |               None | dmiller@comcast.com      |            4 |
+|         21 | Kathy     | Chase      |    None | 801 W 4th Street                         | Reno           |    NV | USA            | 89503      | +1 (775) 223-7665  |               None | kachase@hotmail.com      |            5 |
+|         22 | Heather   | Leacock    |    None | 120 S Orange Ave                         | Orlando        |    FL | USA            | 32801      | +1 (407) 999-7788  |               None | hleacock@gmail.com       |            4 |
+|         23 | John      | Gordon     |    None | 69 Salem Street                          | Boston         |    MA | USA            | 2113       | +1 (617) 522-1333  |               None | johngordon22@yahoo.com   |            4 |
+|         24 | Frank     | Ralston    |    None | 162 E Superior Street                    | Chicago        |    IL | USA            | 60611      | +1 (312) 332-3232  |               None | fralston@gmail.com       |            3 |
+|         25 | Victor    | Stevens    |    None | 319 N. Frances Street                    | Madison        |    WI | USA            | 53703      | +1 (608) 257-0597  |               None | vstevens@yahoo.com       |            5 |
+|         26 | Richard   | Cunningham |    None | 2211 W Berry Street                      | Fort Worth     |    TX | USA            | 76110      | +1 (817) 924-7272  |               None | ricunningham@hotmail.com |            4 |
+|         27 | Patrick   | Gray       |    None | 1033 N Park Ave                          | Tucson         |    AZ | USA            | 85719      | +1 (520) 622-4200  |               None | patrick.gray@aol.com     |            4 |
+|         28 | Julia     | Barnett    |    None | 302 S 700 E                              | Salt Lake City |    UT | USA            | 84102      | +1 (801) 531-7272  |               None | jubarnett@gmail.com      |            5 |
+|         29 | Robert    | Brown      |    None | 796 Dundas Street West                   | Toronto        |    ON | Canada         | M6J 1V1    | +1 (416) 363-8888  |               None | robbrown@shaw.ca         |            3 |
+|         30 | Edward    | Francis    |    None | 230 Elgin Street                         | Ottawa         |    ON | Canada         | K2P 1L7    | +1 (613) 234-3322  |               None | edfrancis@yachoo.ca      |            3 |
+|         31 | Martha    | Silk       |    None | 194A Chain Lake Drive                    | Halifax        |    NS | Canada         | B3S 1C5    | +1 (902) 450-0450  |               None | marthasilk@gmail.com     |            5 |
+|         32 | Aaron     | Mitchell   |    None | 696 Osborne Street                       | Winnipeg       |    MB | Canada         | R3L 2B9    | +1 (204) 452-6452  |               None | aaronmitchell@yahoo.ca   |            4 |
+|         33 | Ellie     | Sullivan   |    None | 5112 48 Street                           | Yellowknife    |    NT | Canada         | X1A 1N6    | +1 (867) 920-2233  |               None | ellie.sullivan@shaw.ca   |            3 |
+|         34 | João      | Fernandes  |    None | Rua da Assunção 53                       | Lisbon         |  None | Portugal       | None       | +351 (213) 466-111 |               None | jfernandes@yahoo.pt      |            4 |
+|         35 | Madalena  | Sampaio    |    None | Rua dos Campeões Europeus de Viena, 4350 | Porto          |  None | Portugal       | None       | +351 (225) 022-448 |               None | masampaio@sapo.pt        |            4 |
++------------+-----------+------------+---------+------------------------------------------+----------------+-------+----------------+------------+--------------------+--------------------+--------------------------+--------------+
+(Output limit exceeded, 25 of 49 total rows shown)
+Are there any columns with null values? Indicate any below. Select all that apply.
+
+
+
+
+Question 5
+Find the cities with the most customers and rank in descending order.
+
+
+select
+City,CustomerId,Count(CustomerId) AS Counts
+from Customers
+group by City
+having Counts=2;
+
++---------------+------------+--------+
+| City          | CustomerId | Counts |
++---------------+------------+--------+
+| Berlin        |         38 |      2 |
+| London        |         53 |      2 |
+| Mountain View |         20 |      2 |
+| Paris         |         40 |      2 |
+| Prague        |          6 |      2 |
+| São Paulo     |         11 |      2 |
++---------------+------------+--------+
+Which of the following cities indicate having 2 customers?
+
+
+
+
+Question 6
+Create a new customer invoice id by combining a customer’s invoice id with their first and last name while ordering your query in the following order: firstname, lastname, and invoiceID.
+
+
+select a.FirstName,a.LastName,a.InvoiceId,
+a.FirstName || a.LastName || a.InvoiceId as NewInvoiceId
+from
+(select i.InvoiceId,c.FirstName,c.LastName
+from Invoices as i
+left join Customers as c
+on i.CustomerId=c.CustomerId) as a
+where a.FirstName like "Astrid"
+
++-------------+------------+-------------+-----------------+
+| a.FirstName | a.LastName | a.InvoiceId | NewInvoiceId    |
++-------------+------------+-------------+-----------------+
+| Astrid      | Gruber     |          78 | AstridGruber78  |
+| Astrid      | Gruber     |          89 | AstridGruber89  |
+| Astrid      | Gruber     |         144 | AstridGruber144 |
+| Astrid      | Gruber     |         273 | AstridGruber273 |
+| Astrid      | Gruber     |         296 | AstridGruber296 |
+| Astrid      | Gruber     |         318 | AstridGruber318 |
+| Astrid      | Gruber     |         370 | AstridGruber370 |
++-------------+------------+-------------+-----------------+
+Select all of the correct "AstridGruber" entries that are returned in your results below. Select all that apply.
+
