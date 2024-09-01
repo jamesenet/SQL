@@ -1,0 +1,173 @@
+Exercise 1:
+Goal: Here we use users table to pull a list of user email addresses. Edit the query to pull email
+addresses, but only for non-deleted users.
+
+SELECT
+id as user_id,
+email_address
+FROM dsv1069.users
+WHERE deleted_at ISNULL;
+
+
+Exercise 2:
+--Goal: Use the items table to count the number of items for sale in each category
+
+SELECT
+  category,
+  COUNT(id) AS item_count
+FROM dsv1069.items
+GROUP BY category
+ORDER BY item_count DESC;
+
+
+Exercise 4:
+--Goal: Check out the query below. This is not the right way to count the number of viewed_item
+events.
+
+SELECT 
+ COUNT(DISTINCT event_id) AS events
+FROM dsv1069.events
+WHERE event_name = ‘view_item'
+
+
+
+Exercise 5:
+--Goal:Compute the number of items in the items table which have been ordered. The query
+below runs, but it isn’t right. Determine what is wrong and correct the error or start from scratch.
+
+SELECT 
+COUNT (DISTINCT O.item_id) AS item_count
+FROM dsv1069.orders O
+JOIN dsv1069.items I
+ON O.item_id = I.id;
+     OR
+
+SELECT 
+COUNT (DISTINCT O.item_id) AS item_count
+FROM dsv1069.orders O
+
+
+Exercise 6:
+--Goal: For each user figure out IF a user has ordered something, and when their first purchase
+was. The query below doesn’t return info for any of the users who haven’t ordered anything
+
+SELECT 
+   users.id AS user_id,
+   MIN(orders.paid_at) AS min_paid_at 
+FROM 
+ dsv1069.users 
+LEFT JOIN 
+ dsv1069.orders 
+ON
+ orders.user_id = users.id
+GROUP BY 
+ users.id;
+
+
+
+Exercise 7:
+--Goal: Figure out what percent of users have ever viewed the user profile page, but this query
+isn’t right. Check to make sure the number of users adds up, and if not, fix the query.
+
+
+SELECT 
+(CASE WHEN first_view ISNULL THEN FALSE 
+      ELSE TRUE END) AS has_viewed_profile_page,
+COUNT(user_id) as users
+FROM 
+  (
+   SELECT 
+      users.id AS user_id,
+      MIN(event_time) as first_view
+    FROM 
+      dsv1069.users
+    LEFT OUTER JOIN 
+      dsv1069.events 
+    ON 
+      events.user_id = users.id
+    AND 
+     events.event_name = 'view_user_profile'
+    GROUP BY 
+     users.id 
+  ) first_profile_views
+GROUP BY 
+ (CASE WHEN first_view ISNULL THEN FALSE
+     ELSE TRUE END)
+
+
+
+Exercise 8:
+Goal: Write a query to format the view_item event into a table with the appropriate columns
+
+
+
+SELECT 
+  event_id,
+  event_time,
+  user_id,
+  platform,
+  MAX (CASE WHEN parameter_name = 'item_id'
+         THEN CAST(parameter_value AS INT)
+         ELSE NULL
+         END) AS item_id,
+  MAX (CASE WHEN parameter_name ='referrer'
+          THEN parameter_value 
+          ELSE NULL 
+          END) AS referrer
+FROM 
+  dsv1069.events 
+WHERE
+  event_name = 'view_item'
+GROUP BY 
+  event_id,
+  event_time,
+  user_id,
+  platform
+ORDER BY event_id;
+
+
+Exercise 9: Imagine that you need to count item views by day. You found this table
+item_views_by_category_temp - should you use it to answer your questiuon(it is alternate table)?
+
+SELECT 
+ SUM(view_events) AS event_count
+FROM 
+ dsv1069.item_views_by_category_temp
+
+
+
+Exercise 10:
+Using any methods you like, determine if you can you trust this events table. (HINT: When did
+we start recording events on mobile)
+
+SELECT 
+ date(event_time) AS date,
+ platform,
+ COUNT(*)
+FROM 
+ dsv1069.events_ex2
+GROUP BY
+ date(event_time),
+ platform;
+
+Exercise 11 : Is this the right way to join orders to users? Is this the right way this join.
+
+---STARTER CODE
+SELECT 
+ *
+FROM 
+ dsv1069.orders
+JOIN
+ dsv1069.users
+ON 
+ orders.user_id = users.parent_user_id
+
+----CORRECT  ANSWER
+SELECT 
+ *
+FROM 
+ dsv1069.orders
+JOIN
+ dsv1069.users
+ON 
+ orders.user_id = COALESCE(users.parent_user_id, users.id);
